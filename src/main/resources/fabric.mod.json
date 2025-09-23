@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "inventorynotifier_autosell",
+  "version": "v6",
+  "name": "Inventory Full Notifier + Auto-Sell",
+  "description": "Notifies you when your inventory is full, and can automatically sell items using /sell all or /sell handall.",
+  "authors": ["jcwd"],
+  "license": "MIT",
+  "icon": "assets/inventorynotifier_autosell/icon.png",
+  "environment": "*",
+
+  "entrypoints": {
+    "client": [
+      "com.mods.invfull.InventoryFullNotifierClient"
+    ]
+  },
+
+  "contact": {
+    "homepage": "https://modrinth.com/mod/inventoryfullnotifier+autosell",
+    "issues": "https://github.com/jcwd-source/InventoryNotifier-Autosell/issues",
+    "sources": "https://github.com/jcwd-source/InventoryNotifier-Autosell"
+  },
+
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": ">=1.21.1 <=1.21.8",
+    "fabric-api": "*"
+  },
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "Modrinth": "https://modrinth.com/mod/inventoryfullnotifier+autosell",
+        "Issues": "https://github.com/jcwd-source/InventoryNotifier-Autosell/issues"
+      },
+      "credits": "Author: jcwd",
+      "description": "Commands:\n/autosell - Enable/Disable autosell\n/autosell mode all - Switch autosell to /sell all\n/autosell mode handall - Switch autosell to /sell handall\n/slotnotify - Toggle milestone notifications (50% & 90%)",
+      "banner": "https://raw.githubusercontent.com/jcwd-source/InventoryNotifier-Autosell/main/BANNER.gif"
+    }
+  }
+}
