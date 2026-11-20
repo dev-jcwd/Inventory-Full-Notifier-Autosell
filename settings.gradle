@@ -5,4 +5,10 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+// "yarn" (default) is the original 1.21.x build in build.gradle.
+// "official" is the Minecraft 26.1+ build in build-official.gradle (official Mojang names, no remapping).
+def lane = providers.gradleProperty('lane').getOrElse('yarn')
+rootProject.buildFileName = lane == 'official' ? 'build-official.gradle' : 'build.gradle'
+
 rootProject.name = "inventory-full-notifier"
