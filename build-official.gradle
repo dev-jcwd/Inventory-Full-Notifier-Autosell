@@ -1,0 +1,60 @@
+// Minecraft 26.1 and newer (official Mojang names, no remapping). The 1.21.x build is build.gradle.
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+def mc = project.official_minecraft_version
+
+version = "${project.official_mod_version}+${mc}"
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    maven { url "https://maven.terraformersmc.com/" }    // Mod Menu
+}
+
+sourceSets.main.java.setSrcDirs(["src/official/java", "src/compat/${project.official_compat}/java"])
+sourceSets.main.resources.setSrcDirs(["src/official/resources"])
+
+dependencies {
+    minecraft "com.mojang:minecraft:${mc}"
+    implementation "net.fabricmc:fabric-loader:${project.official_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.official_fabric_version}"
+
+    // Mod Menu: only for the config button, the mod works without it
+    compileOnly "com.terraformersmc:modmenu:${project.official_modmenu_version}"
+    localRuntime "com.terraformersmc:modmenu:${project.official_modmenu_version}"
+}
+
+processResources {
+    // the icon lives with the original sources
+    from("src/main/resources/assets/inventorynotifier_autosell/icon.png") {
+        into "assets/inventorynotifier_autosell"
+    }
+
+    def props = [version: project.version, mc_range: project.official_mc_range]
+    inputs.properties(props)
+    filteringCharset "UTF-8"
+    filesMatching("fabric.mod.json") { expand props }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+    it.options.encoding = "UTF-8"
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archives_base_name}" }
+    }
+}
